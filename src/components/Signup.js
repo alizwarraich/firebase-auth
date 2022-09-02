@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Card, Button, Form, Alert } from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext'
 import { auth } from '../firebase'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Signup = () => {
     const emailRef = useRef()
@@ -11,6 +11,7 @@ const Signup = () => {
     const { signup } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,10 +22,21 @@ const Signup = () => {
             setError('')
             setLoading(true)
             await signup(auth, emailRef.current.value, passwordRef.current.value)
+            setError({
+                message: 'Account created successfully',
+                variant: 'success',
+            })
+            navigate('/');
+            emailRef.current.value = '';
+            passwordRef.current.value = '';
+            passwordConfirmRef.current.value = '';
         }
         catch (error) {
-            setError('Failed to create an account')
-            console.log(error)
+            setError({
+                message: 'Failed to create an account',
+                variant: 'danger',
+            })
+            console.log(error.message)
         }
         setLoading(false)
     }
@@ -33,7 +45,7 @@ const Signup = () => {
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Signup</h2>
-                    {error && <Alert variant="danger">{error}</Alert>}
+                    {error.message && <Alert onClose={() => setError({ message: '', variant: '' })} dismissible variant={error.variant}>{error.message}</Alert>}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>

@@ -1,11 +1,11 @@
+import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import { AuthProvider } from './context/AuthContext';
 import { Container } from 'react-bootstrap';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from "./components/Login";
 
-function App() {
+export default function App() {
   return (
     <Container className="d-flex align-items-center justify-content-center"
       style={{ minHeight: '100vh' }}>
@@ -24,5 +24,3 @@ function App() {
     </Container>
   );
 }
-
-export default App;
