@@ -45,7 +45,7 @@ const Signup = () => {
                 message: 'Failed to create an account',
                 variant: 'danger',
             })
-            console.log(error.message)
+            // console.log(error.message)
         }
         setLoading(false)
     }

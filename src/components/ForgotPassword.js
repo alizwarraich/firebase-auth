@@ -30,7 +30,7 @@ export default function ForgotPassword() {
                 message: 'Failed to reset password',
                 variant: 'danger'
             })
-            console.log(error.message)
+            // console.log(error.message)
         }
         setLoading(false)
     }

@@ -39,7 +39,7 @@ const Login = () => {
                 message: 'Invalid email or password!',
                 variant: 'danger'
             })
-            console.log(error.message)
+            // console.log(error.message)
         }
         setLoading(false)
     }

@@ -28,7 +28,7 @@ const Dashboard = () => {
                 message: 'Failed to logout',
                 variant: 'danger'
             })
-            console.log(error)
+            // console.log(error)
         }
     }
 

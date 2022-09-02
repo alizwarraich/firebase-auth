@@ -34,9 +34,7 @@ export default function UpdateProfile() {
                 navigate('/')
             }
         }
-        if (passwordRef.current.value === currentUser.password) {
-            return setError({ message: 'New password must be different from old password', variant: 'warning' })
-        }
+
         try {
             setError('')
             setLoading(true)
@@ -55,7 +53,7 @@ export default function UpdateProfile() {
                 message: 'Failed to update password',
                 variant: 'danger',
             })
-            console.log(error.message)
+            // console.log(error.message)
         }
         setLoading(false)
     }
