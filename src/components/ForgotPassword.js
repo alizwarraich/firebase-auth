@@ -1,23 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Card, Button, Form, Alert } from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext'
 import { auth } from '../firebase'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-const Login = () => {
-    const navigate = useNavigate()
-    const { currentUser } = useAuth()
-
-    useEffect(() => {
-        if (currentUser) {
-            navigate('/')
-        }
-        // eslint-disable-next-line
-    }, [currentUser])
-
+export default function ForgotPassword() {
     const emailRef = useRef()
-    const passwordRef = useRef()
-    const { login } = useAuth()
+    const { resetPassword } = useAuth()
     const [error, setError] = useState({
         message: '',
         variant: '',
@@ -29,14 +18,16 @@ const Login = () => {
         try {
             setError('')
             setLoading(true)
-            await login(auth, emailRef.current.value, passwordRef.current.value)
-            navigate('/')
+            await resetPassword(auth, emailRef.current.value)
+            setError({
+                message: 'Check your inbox for a reset link',
+                variant: 'success',
+            })
             emailRef.current.value = '';
-            passwordRef.current.value = '';
         }
         catch (error) {
             setError({
-                message: 'Invalid email or password!',
+                message: 'Failed to reset password',
                 variant: 'danger'
             })
             console.log(error.message)
@@ -47,7 +38,7 @@ const Login = () => {
         <>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Login</h2>
+                    <h2 className="text-center mb-4">Password Reset</h2>
                     {/* {auth.currentUser && <h2 className='text-center'>{auth.currentUser.email}</h2>} */}
                     {error.message && <Alert onClose={() => setError({ message: '', variant: '' })} dismissible variant={error.variant}>{error.message}</Alert>}
                     <Form onSubmit={handleSubmit}>
@@ -55,15 +46,10 @@ const Login = () => {
                             <Form.Label>Email</Form.Label>
                             <Form.Control className="mb-3" type="email" ref={emailRef} required />
                         </Form.Group>
-                        <Form.Group id="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control className="mb-3" type="password" ref={passwordRef} required />
-                        </Form.Group>
-
-                        <Button disabled={loading} className="w-100 mt-3" type='submit'>Login</Button>
+                        <Button disabled={loading} className="w-100 mt-3" type='submit'>Reset Password</Button>
                     </Form>
                     <div className='w-100 text-center mt-3'>
-                        <Link to='/forgot-password'>Forgot Password?</Link>
+                        Back to <Link to='/login'>Login</Link> page
                     </div>
                 </Card.Body>
             </Card>
@@ -73,5 +59,3 @@ const Login = () => {
         </>
     )
 }
-
-export default Login

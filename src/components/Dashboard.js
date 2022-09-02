@@ -22,10 +22,6 @@ const Dashboard = () => {
     async function handleLogout() {
         try {
             await logout()
-            setError({
-                message: 'Logged out successfully',
-                variant: 'success',
-            })
             navigate('/login')
         } catch (error) {
             setError({

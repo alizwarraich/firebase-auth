@@ -1,9 +1,11 @@
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
+import ForgotPassword from "./components/ForgotPassword";
 import { AuthProvider } from './context/AuthContext';
 import { Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import UpdateProfile from "./components/UpdateProfile";
 
 export default function App() {
   return (
@@ -17,6 +19,9 @@ export default function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/update-profile" element={<UpdateProfile />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </AuthProvider>
         </Router>
